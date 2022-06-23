@@ -67,7 +67,7 @@ var path_1 = __importDefault(require("path"));
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var request = (0, supertest_1.default)(index_1.default);
-describe("Testing all endpoints", function () { return __awaiter(void 0, void 0, void 0, function () {
+describe('Testing all endpoints', function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         beforeAll(function () {
             return __awaiter(this, void 0, void 0, function () {
@@ -75,7 +75,7 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                     switch (_a.label) {
                         case 0:
                             if (!!fs_1.default.existsSync(path_1.default.join(__dirname, '../../thumb'))) return [3 /*break*/, 2];
-                            return [4 /*yield*/, fs_1.promises.mkdir((path_1.default.join(__dirname, '../../thumb')))];
+                            return [4 /*yield*/, fs_1.promises.mkdir(path_1.default.join(__dirname, '../../thumb'))];
                         case 1:
                             _a.sent();
                             _a.label = 2;
@@ -85,15 +85,16 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
             });
         });
         afterAll(function () {
-            fs_1.default.rmSync(path_1.default.join(__dirname, '../../thumb'), { recursive: true, force: true });
+            fs_1.default.rmSync(path_1.default.join(__dirname, '../../thumb'), {
+                recursive: true,
+                force: true
+            });
         });
-        it("Runs server entry point", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Runs server entry point', function () { return __awaiter(void 0, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, request.get('/')
-                        // Assert
-                    ];
+                    case 0: return [4 /*yield*/, request.get('/')];
                     case 1:
                         response = _a.sent();
                         // Assert
@@ -103,13 +104,11 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Runs api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Runs api endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, request.get('/api')
-                        // Assert
-                    ];
+                    case 0: return [4 /*yield*/, request.get('/api')];
                     case 1:
                         response = _a.sent();
                         // Assert
@@ -119,15 +118,13 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Creates resized image", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Creates resized image', function () { return __awaiter(void 0, void 0, void 0, function () {
             var url, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord&width=1067&height=1076";
-                        return [4 /*yield*/, request.get(url)
-                            // Assert
-                        ];
+                        url = '/api/images?filename=fjord&width=1067&height=1076';
+                        return [4 /*yield*/, request.get(url)];
                     case 1:
                         response = _a.sent();
                         // Assert
@@ -136,15 +133,13 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Retrieves previously cached image", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Retrieves previously cached image', function () { return __awaiter(void 0, void 0, void 0, function () {
             var url, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord&width=1067&height=1076";
-                        return [4 /*yield*/, request.get(url)
-                            // Assert
-                        ];
+                        url = '/api/images?filename=fjord&width=1067&height=1076';
+                        return [4 /*yield*/, request.get(url)];
                     case 1:
                         response = _a.sent();
                         // Assert
@@ -153,21 +148,17 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Requires all params with acceptable values", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Requires all params with acceptable values', function () { return __awaiter(void 0, void 0, void 0, function () {
             var url, url2, response, response2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord" // missing params
-                        ;
-                        url2 = "/api/images?filename=fjord&width=1000&height=hello" // wrong param value
-                        ;
+                        url = '/api/images?filename=fjord';
+                        url2 = '/api/images?filename=fjord&width=1000&height=hello';
                         return [4 /*yield*/, request.get(url)];
                     case 1:
                         response = _a.sent();
-                        return [4 /*yield*/, request.get(url2)
-                            // Assert
-                        ];
+                        return [4 /*yield*/, request.get(url2)];
                     case 2:
                         response2 = _a.sent();
                         // Assert
@@ -179,21 +170,17 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Requires all params to have truthy values", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Requires all params to have truthy values', function () { return __awaiter(void 0, void 0, void 0, function () {
             var url, url2, response, response2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord&width=1000&height" // missing hight value
-                        ;
-                        url2 = "/api/images?filename=&width&height=1000" // missing height and name
-                        ;
+                        url = '/api/images?filename=fjord&width=1000&height';
+                        url2 = '/api/images?filename=&width&height=1000';
                         return [4 /*yield*/, request.get(url)];
                     case 1:
                         response = _a.sent();
-                        return [4 /*yield*/, request.get(url2)
-                            // Assert
-                        ];
+                        return [4 /*yield*/, request.get(url2)];
                     case 2:
                         response2 = _a.sent();
                         // Assert
@@ -205,16 +192,13 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
-        it("Requires an existent image name", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Requires an existent image name', function () { return __awaiter(void 0, void 0, void 0, function () {
             var url, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=non-existent-img&width=10&height=10" // non existent img
-                        ;
-                        return [4 /*yield*/, request.get(url)
-                            // Assert
-                        ];
+                        url = '/api/images?filename=non-existent-img&width=10&height=10';
+                        return [4 /*yield*/, request.get(url)];
                     case 1:
                         response = _a.sent();
                         // Assert

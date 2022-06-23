@@ -51,16 +51,16 @@ route.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 width = req.query.width;
                 height = req.query.height;
                 // Asser that all params have values
-                // if(!filename || !width || !height) 
-                if (filename === "")
+                // if(!filename || !width || !height)
+                if (filename === '')
                     return [2 /*return*/, res.status(400).send('filename parameter value is required')];
-                if (width === "")
+                if (width === '')
                     return [2 /*return*/, res.status(400).send('width parameter value is required')];
-                if (height === "")
+                if (height === '')
                     return [2 /*return*/, res.status(400).send('height parameter value is required')];
-                if (!(typeof filename === "string" &&
-                    typeof width === "string" &&
-                    typeof height === "string")) return [3 /*break*/, 2];
+                if (!(typeof filename === 'string' &&
+                    typeof width === 'string' &&
+                    typeof height === 'string')) return [3 /*break*/, 2];
                 return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
             case 1:
                 imageStatus = _a.sent();
@@ -71,19 +71,19 @@ route.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 if (imageStatus === undefined) {
                     res.status(400).send('Please re-check your parameters.');
                 }
+                // Non-existent image
+                else if (imageStatus.created === 0) {
+                    res.status(404).send('Specified image not found');
+                }
                 // Successfully created
-                else if (imageStatus.created === true) {
+                else if (imageStatus.created === 1) {
                     res.status(201).sendFile(imageStatus.path);
                 }
                 // Successfully retrieved
-                else if (imageStatus.created === false) {
+                else if (imageStatus.created === 2) {
                     res.status(200).sendFile(imageStatus.path);
                 }
-                // Non-existent image
-                else if (imageStatus.created === null) {
-                    res.status(404).send('Specified image not found');
-                }
-                // Default 
+                // Default
                 else
                     res.status(400).send('Please re-check your parameters.');
                 return [2 /*return*/];

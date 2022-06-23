@@ -43,21 +43,19 @@ var resize_1 = __importDefault(require("../../utilities/resize"));
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 // unit test for resize function
-describe("Tests resize asynchronus function", function () {
+describe('Tests resize asynchronus function', function () {
     var targetPath = path_1.default.join(__dirname, '../../../thumb/');
-    it("Detects non existing source images", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Detects non existing source images', function () { return __awaiter(void 0, void 0, void 0, function () {
         var filename, width, height, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     filename = 'non-existing-image', width = '1000', height = '1000';
-                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)
-                        // Assert
-                    ];
+                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
                 case 1:
                     obj = _a.sent();
                     // Assert
-                    expect(obj).toEqual({ created: null, path: null });
+                    expect(obj).toEqual({ created: 0, path: 'none' });
                     return [2 /*return*/];
             }
         });
@@ -71,9 +69,7 @@ describe("Tests resize asynchronus function", function () {
                     fs_1.default.rmSync(targetPath, { recursive: true, force: true }); // remove foldler
                     filename = 'fjord', width = '1000', height = '1000';
                     // Act
-                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)
-                        // Assert
-                    ];
+                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
                 case 1:
                     // Act
                     _a.sent();
@@ -83,51 +79,45 @@ describe("Tests resize asynchronus function", function () {
             }
         });
     }); });
-    it("Creates new resized image", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Creates new resized image', function () { return __awaiter(void 0, void 0, void 0, function () {
         var filename, width, height, targetImage, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     filename = 'fjord', width = '1038', height = '1083';
                     targetImage = "".concat(filename, "_").concat(width, "_").concat(height, ".jpg");
-                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)
-                        // Assert
-                    ];
+                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
                 case 1:
                     obj = _a.sent();
                     // Assert
-                    expect(obj).toEqual({ created: true, path: targetPath + targetImage });
+                    expect(obj).toEqual({ created: 1, path: targetPath + targetImage });
                     return [2 /*return*/];
             }
         });
     }); });
-    it("Retrieves previously cashed image", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Retrieves previously cashed image', function () { return __awaiter(void 0, void 0, void 0, function () {
         var filename, width, height, targetImage, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     filename = 'fjord', width = '1038', height = '1083';
                     targetImage = "".concat(filename, "_").concat(width, "_").concat(height, ".jpg");
-                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)
-                        // Assert
-                    ];
+                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
                 case 1:
                     obj = _a.sent();
                     // Assert
-                    expect(obj).toEqual({ created: false, path: targetPath + targetImage });
+                    expect(obj).toEqual({ created: 2, path: targetPath + targetImage });
                     return [2 /*return*/];
             }
         });
     }); });
-    it("Returns undefined if any parameter is not valid", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Returns undefined if any parameter is not valid', function () { return __awaiter(void 0, void 0, void 0, function () {
         var filename, width, height, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     filename = 'fjord', width = '1038', height = 'hello';
-                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)
-                        // Assert
-                    ];
+                    return [4 /*yield*/, (0, resize_1.default)(filename, width, height)];
                 case 1:
                     obj = _a.sent();
                     // Assert

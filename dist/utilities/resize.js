@@ -75,9 +75,7 @@ var resize = function (filename, width, height) { return __awaiter(void 0, void 
                 sourceImage = "".concat(filename, ".jpg");
                 targetImage = "".concat(filename, "_").concat(width, "_").concat(height, ".jpg");
                 if (!!fs_1.default.existsSync(targetPath)) return [3 /*break*/, 2];
-                return [4 /*yield*/, fs_1.promises.mkdir(targetPath)
-                    // Cashing
-                ];
+                return [4 /*yield*/, fs_1.promises.mkdir(targetPath)];
             case 1:
                 _a.sent();
                 _a.label = 2;
@@ -85,16 +83,18 @@ var resize = function (filename, width, height) { return __awaiter(void 0, void 
                 _a.trys.push([2, 6, , 7]);
                 // Non-existent source image
                 if (!fs_1.default.existsSync(sourcePath + sourceImage)) {
-                    return [2 /*return*/, { created: null, path: null }];
+                    return [2 /*return*/, { created: 0, path: 'none' }];
                 }
                 if (!!fs_1.default.existsSync(targetPath + targetImage)) return [3 /*break*/, 4];
-                return [4 /*yield*/, (0, sharp_1.default)(sourcePath + sourceImage).resize(parseInt(width), parseInt(height)).toFile(targetPath + targetImage)];
+                return [4 /*yield*/, (0, sharp_1.default)(sourcePath + sourceImage)
+                        .resize(parseInt(width), parseInt(height))
+                        .toFile(targetPath + targetImage)];
             case 3:
                 _a.sent();
-                return [2 /*return*/, { created: true, path: targetPath + targetImage }];
+                return [2 /*return*/, { created: 1, path: targetPath + targetImage }];
             case 4:
                 if (fs_1.default.existsSync(targetPath))
-                    return [2 /*return*/, { created: false, path: targetPath + targetImage }];
+                    return [2 /*return*/, { created: 2, path: targetPath + targetImage }];
                 _a.label = 5;
             case 5: return [3 /*break*/, 7];
             case 6:

@@ -19,13 +19,13 @@ const resize = async (filename: string, width: string, height: string) => {
       return {created: null, path: null}
     }
 
-    // Created
+    // Create image
     if(!fs.existsSync(targetPath + targetImage)) {
       await sharp(sourcePath + sourceImage).resize(parseInt(width), parseInt(height)).toFile(targetPath + targetImage)
       return {created: true, path: targetPath + targetImage}
     }
 
-    // Reused
+    // Reuse cached image
     else if(fs.existsSync(targetPath)) return {created: false, path: targetPath + targetImage}
 
   } catch(err) {

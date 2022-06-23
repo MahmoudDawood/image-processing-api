@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,35 +64,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp_1 = __importDefault(require("sharp"));
 var path_1 = __importDefault(require("path"));
-var fs_1 = __importDefault(require("fs"));
+var fs_1 = __importStar(require("fs"));
 var resize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var sourcePath, targetPath, err_1;
+    var sourcePath, targetPath, sourceImage, targetImage, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                sourcePath = path_1.default.join(__dirname, '../../images/', "".concat(filename, ".jpg"));
-                targetPath = path_1.default.join(__dirname, '../../thumb/', "".concat(filename, "_").concat(width, "_").concat(height, ".jpg"));
-                _a.label = 1;
+                sourcePath = path_1.default.join(__dirname, '../../images/');
+                targetPath = path_1.default.join(__dirname, '../../thumb/');
+                sourceImage = "".concat(filename, ".jpg");
+                targetImage = "".concat(filename, "_").concat(width, "_").concat(height, ".jpg");
+                if (!!fs_1.default.existsSync(targetPath)) return [3 /*break*/, 2];
+                return [4 /*yield*/, fs_1.promises.mkdir(targetPath)
+                    // Cashing
+                ];
             case 1:
-                _a.trys.push([1, 5, , 6]);
-                // Non-existent
-                if (!fs_1.default.existsSync(sourcePath)) {
+                _a.sent();
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 6, , 7]);
+                // Non-existent source image
+                if (!fs_1.default.existsSync(sourcePath + sourceImage)) {
                     return [2 /*return*/, { created: null, path: null }];
                 }
-                if (!!fs_1.default.existsSync(targetPath)) return [3 /*break*/, 3];
-                return [4 /*yield*/, (0, sharp_1.default)(sourcePath).resize(parseInt(width), parseInt(height)).toFile(targetPath)];
-            case 2:
-                _a.sent();
-                return [2 /*return*/, { created: true, path: targetPath }];
+                if (!!fs_1.default.existsSync(targetPath + targetImage)) return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, sharp_1.default)(sourcePath + sourceImage).resize(parseInt(width), parseInt(height)).toFile(targetPath + targetImage)];
             case 3:
+                _a.sent();
+                return [2 /*return*/, { created: true, path: targetPath + targetImage }];
+            case 4:
                 if (fs_1.default.existsSync(targetPath))
-                    return [2 /*return*/, { created: false, path: targetPath }];
-                _a.label = 4;
-            case 4: return [3 /*break*/, 6];
-            case 5:
+                    return [2 /*return*/, { created: false, path: targetPath + targetImage }];
+                _a.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
                 err_1 = _a.sent();
                 return [2 /*return*/, undefined];
-            case 6: return [2 /*return*/];
+            case 7: return [2 /*return*/];
         }
     });
 }); };

@@ -14,3 +14,4 @@ app.get('/', function (req, res) {
 app.listen(PORT, function () {
     console.log("Server is running on PORT ".concat(PORT));
 });
+exports.default = app;

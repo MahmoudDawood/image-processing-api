@@ -50,14 +50,14 @@ route.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 filename = req.query.filename;
                 width = req.query.width;
                 height = req.query.height;
-                // check all params have value
+                // Asser that all params have values
                 // if(!filename || !width || !height) 
                 if (filename === "")
-                    return [2 /*return*/, res.status(400).send('filename parameter is required to resize')];
+                    return [2 /*return*/, res.status(400).send('filename parameter value is required')];
                 if (width === "")
-                    return [2 /*return*/, res.status(400).send('width parameter is required to resize')];
+                    return [2 /*return*/, res.status(400).send('width parameter value is required')];
                 if (height === "")
-                    return [2 /*return*/, res.status(400).send('height parameter is required to resize')];
+                    return [2 /*return*/, res.status(400).send('height parameter value is required')];
                 if (!(typeof filename === "string" &&
                     typeof width === "string" &&
                     typeof height === "string")) return [3 /*break*/, 2];
@@ -70,23 +70,20 @@ route.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 // Error is thrown
                 if (imageStatus === undefined) {
                     res.status(400).send('Please re-check your parameters.');
-                    // console.log("unvalid parameters")
                 }
                 // Successfully created
                 else if (imageStatus.created === true) {
                     res.status(201).sendFile(imageStatus.path);
-                    // console.log('Image created')
                 }
                 // Successfully retrieved
                 else if (imageStatus.created === false) {
                     res.status(200).sendFile(imageStatus.path);
-                    // console.log('Image already exists')
                 }
                 // Non-existent image
                 else if (imageStatus.created === null) {
                     res.status(404).send('Specified image not found');
-                    // console.log('err')
                 }
+                // Default 
                 else
                     res.status(400).send('Please re-check your parameters.');
                 return [2 /*return*/];

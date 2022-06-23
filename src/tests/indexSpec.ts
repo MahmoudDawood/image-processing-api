@@ -8,7 +8,7 @@ const request = supertest(app)
 describe("Testing all endpoints", async() => {
 
   beforeAll(async function () {
-    await fsPromise.mkdir((path.join(__dirname, '../../thumb')))
+    if(!fs.existsSync(path.join(__dirname, '../../thumb'))) await fsPromise.mkdir((path.join(__dirname, '../../thumb')))
   })
   afterAll(function () {
     fs.rmSync(path.join(__dirname, '../../thumb'), { recursive: true, force: true })
@@ -19,7 +19,6 @@ describe("Testing all endpoints", async() => {
     // Act
     const response = await request.get('/')
     // Assert
-    // console.log(response)
     expect(response.text).toBe('Welcome to image processing API')
     expect(response.status).toBe(200)
   })
@@ -34,7 +33,7 @@ describe("Testing all endpoints", async() => {
 
   it("Creates resized image", async() => {
     // Arrange
-    const url = "/api/images?filename=fjord&width=1000&height=1000"
+    const url = "/api/images?filename=fjord&width=1067&height=1076"
     // Act
     const response = await request.get(url)
     // Assert
@@ -42,7 +41,7 @@ describe("Testing all endpoints", async() => {
   })
   it("Retrieves previously cached image", async() => {
     // Arrange
-    const url = "/api/images?filename=fjord&width=1000&height=1000"
+    const url = "/api/images?filename=fjord&width=1067&height=1076"
     // Act
     const response = await request.get(url)
     // Assert
@@ -71,10 +70,10 @@ describe("Testing all endpoints", async() => {
     const response = await request.get(url)
     const response2 = await request.get(url2)
     // Assert
-    expect(response.text).toBe('height parameter is required to resize')
+    expect(response.text).toBe('height parameter value is required')
     expect(response.status).toBe(400)
 
-    expect(response2.text).toBe('filename parameter is required to resize')
+    expect(response2.text).toBe('filename parameter value is required')
     expect(response2.status).toBe(400)
   })
   it("Requires an existent image name", async() => {

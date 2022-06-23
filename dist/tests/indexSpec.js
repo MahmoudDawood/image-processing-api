@@ -73,10 +73,13 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, fs_1.promises.mkdir((path_1.default.join(__dirname, '../../thumb')))];
+                        case 0:
+                            if (!!fs_1.default.existsSync(path_1.default.join(__dirname, '../../thumb'))) return [3 /*break*/, 2];
+                            return [4 /*yield*/, fs_1.promises.mkdir((path_1.default.join(__dirname, '../../thumb')))];
                         case 1:
                             _a.sent();
-                            return [2 /*return*/];
+                            _a.label = 2;
+                        case 2: return [2 /*return*/];
                     }
                 });
             });
@@ -90,12 +93,10 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, request.get('/')
                         // Assert
-                        // console.log(response)
                     ];
                     case 1:
                         response = _a.sent();
                         // Assert
-                        // console.log(response)
                         expect(response.text).toBe('Welcome to image processing API');
                         expect(response.status).toBe(200);
                         return [2 /*return*/];
@@ -123,7 +124,7 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord&width=1000&height=1000";
+                        url = "/api/images?filename=fjord&width=1067&height=1076";
                         return [4 /*yield*/, request.get(url)
                             // Assert
                         ];
@@ -140,7 +141,7 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = "/api/images?filename=fjord&width=1000&height=1000";
+                        url = "/api/images?filename=fjord&width=1067&height=1076";
                         return [4 /*yield*/, request.get(url)
                             // Assert
                         ];
@@ -196,9 +197,9 @@ describe("Testing all endpoints", function () { return __awaiter(void 0, void 0,
                     case 2:
                         response2 = _a.sent();
                         // Assert
-                        expect(response.text).toBe('height parameter is required to resize');
+                        expect(response.text).toBe('height parameter value is required');
                         expect(response.status).toBe(400);
-                        expect(response2.text).toBe('filename parameter is required to resize');
+                        expect(response2.text).toBe('filename parameter value is required');
                         expect(response2.status).toBe(400);
                         return [2 /*return*/];
                 }
